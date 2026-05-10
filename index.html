@@ -396,15 +396,11 @@ textarea:focus{
     padding:60px 20px;
 }
 
-/* FOOTER */
-
 .footer{
     text-align:center;
     margin-top:45px;
     color:#cbd5e1;
 }
-
-/* ANIMATION */
 
 @keyframes show{
 
@@ -425,8 +421,6 @@ textarea:focus{
 
 <body>
 
-<!-- BACKGROUND -->
-
 <div class="bg">
 
     <div class="ball ball1"></div>
@@ -436,8 +430,6 @@ textarea:focus{
 </div>
 
 <div class="container">
-
-    <!-- HEADER -->
 
     <div class="header">
 
@@ -458,8 +450,6 @@ textarea:focus{
         </div>
 
     </div>
-
-    <!-- MAIN -->
 
     <div class="main">
 
@@ -488,9 +478,7 @@ textarea:focus{
             </div>
 
             <label class="label">
-
                 Username Roblox
-
             </label>
 
             <div class="input-box">
@@ -503,9 +491,7 @@ textarea:focus{
             </div>
 
             <label class="label">
-
                 Bio / Deskripsi
-
             </label>
 
             <div class="input-box">
@@ -513,6 +499,21 @@ textarea:focus{
                 <textarea
                 id="bio"
                 placeholder="Contoh: Blox Fruits Player"></textarea>
+
+            </div>
+
+            <!-- UPLOAD FOTO -->
+
+            <label class="label">
+                Upload Foto Custom
+            </label>
+
+            <div class="input-box">
+
+                <input
+                type="file"
+                id="photo"
+                accept="image/*">
 
             </div>
 
@@ -544,8 +545,6 @@ textarea:focus{
 
             </div>
 
-            <!-- SEARCH -->
-
             <div class="search-box">
 
                 <input
@@ -554,8 +553,6 @@ textarea:focus{
                 placeholder="Cari username...">
 
             </div>
-
-            <!-- ACCOUNTS -->
 
             <div
             class="accounts"
@@ -602,6 +599,39 @@ document.getElementById("successSound");
 
 const searchInput =
 document.getElementById("search");
+
+/* CUSTOM PHOTO */
+
+let customPhoto = "";
+
+document
+.getElementById("photo")
+.addEventListener(
+"change",
+function(e){
+
+    const file =
+    e.target.files[0];
+
+    if(!file) return;
+
+    const reader =
+    new FileReader();
+
+    reader.onload =
+    function(event){
+
+        customPhoto =
+        event.target.result;
+
+        avatar.src =
+        customPhoto;
+
+    };
+
+    reader.readAsDataURL(file);
+
+});
 
 /* LIVE ROBLOX AVATAR */
 
@@ -696,7 +726,9 @@ function saveAccount(){
 
         username,
         bio,
-        avatar:avatar.src
+
+        avatar:
+        customPhoto || avatar.src
 
     });
 
@@ -709,6 +741,9 @@ function saveAccount(){
 
     document.getElementById("username").value="";
     document.getElementById("bio").value="";
+    document.getElementById("photo").value="";
+
+    customPhoto = "";
 
     previewName.innerText =
     "Roblox User";
